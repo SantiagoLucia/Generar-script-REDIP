@@ -88,7 +88,7 @@ INTO RCE_GED.SYS_CIRCUNSCRIPCION
 VALUES
 (
     {args[0]}, --Id de tabla Circunscripcion
-    '{args[0]}', --mismo Id de la tabla literal
+    {args[0]}, --mismo Id de la tabla literal
     '{args[1]}', ----Nombre de la Delegación
     {args[2]}, -- Tipo de Registro (2 Defunciones, 8 Nacimientos, 4 Matrimonios, 1 Certificaciones, 3 Digitalizacion de Nacimientos, 6 Digitalizacion de Defunciones, 5 Digitalizacion de Matrimonios)
     '{args[3]}', -- Código de Delegación Renaper debe venir indicado en el GLPI
