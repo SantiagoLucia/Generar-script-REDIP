@@ -98,8 +98,8 @@ VALUES
     NULL
 );
 
-DBMS_OUTPUT.put_line ('Registros insertados: ' || SQL%%ROWCOUNT);
-v_registros_modificados := v_registros_modificados + SQL%%ROWCOUNT;
+DBMS_OUTPUT.put_line ('Registros insertados: ' || SQL%ROWCOUNT);
+v_registros_modificados := v_registros_modificados + SQL%ROWCOUNT;
 
 """)
 
@@ -170,8 +170,8 @@ END;
             insert.write(f"""
     INSERT INTO RCE_GED.SYS_KODAK_CIRCUNSCRIPCION (ID_KODAK_CIRCUNSCRIPCION,FK_TIPO_REGISTRO,NOMBRE,FK_CIRCUNSCRIPCION) VALUES (v_id_kodak,{args[0]},'{args[1]}',{args[2]});
     v_id_kodak := v_id_kodak + 1;
-    DBMS_OUTPUT.put_line ('Registros insertados: ' || SQL%%ROWCOUNT);
-    v_registros_insertados := v_registros_insertados + SQL%%ROWCOUNT;
+    DBMS_OUTPUT.put_line ('Registros insertados: ' || SQL%ROWCOUNT);
+    v_registros_insertados := v_registros_insertados + SQL%ROWCOUNT;
 
 """)
 
