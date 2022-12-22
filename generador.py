@@ -1,10 +1,10 @@
-import os
+import pathlib
 import pandas as pd
 from tabulate import tabulate
 import sqlalchemy
 from config import CON_URL
 
-desktop = os.path.expanduser("~/Desktop")
+desktop = pathlib.Path.home() / "Escritorio"
 
 
 def escribir_archivo(nom_archivo, seccion, *args):
@@ -180,7 +180,7 @@ def crear_scripts_sql(df):
     flag_encabezado_kodak = 1
     cant1 = 0
     cant2 = 0
-    nombre_archivo_d = desktop+'/PROD - 1 - INSERT DELEGACIONES.sql'
+    nombre_archivo_d = desktop / "PROD - 1 - INSERT DELEGACIONES.sql"
 
     engine = sqlalchemy.create_engine(CON_URL)
     with engine.connect() as conn:
@@ -253,7 +253,7 @@ def crear_scripts_sql(df):
             if int(reg) in (3, 5, 6):
                 if flag_encabezado_kodak == 1:
                     flag_encabezado_kodak = 0
-                    nombre_archivo_k = desktop+'/PROD - 2 - INSERT DELEGACIONES KODAK.sql'
+                    nombre_archivo_k = desktop / "PROD - 2 - INSERT DELEGACIONES KODAK.sql"
                     escribir_archivo(nombre_archivo_k, 'encabezado_kodak', cant2, k_ini)
 
                 escribir_archivo(nombre_archivo_k, 'insert_kodak', reg, renaper, id_cir_str)
