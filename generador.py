@@ -273,4 +273,3 @@ if __name__ == "__main__":
     pdtabulate=lambda df:tabulate(df,headers='keys',tablefmt='psql')
     print(pdtabulate(df))
     crear_scripts_sql(df)
-
