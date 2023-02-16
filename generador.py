@@ -32,22 +32,20 @@ def crear_scripts_sql(df):
 
     engine = sqlalchemy.create_engine(CON_URL)
     with engine.connect() as conn:
-        print("Obteniendo último ID de delegación...")
         
+        print("Obteniendo último ID de delegación...")
         query = """SELECT ID_CIRCUNSCRIPCION FROM 
             RCE_GED.SYS_CIRCUNSCRIPCION ORDER BY ID_CIRCUNSCRIPCION DESC
-            fetch first 1 rows only
-            """        
+            fetch first 1 rows only"""        
         data = pd.read_sql(query, conn)
         id_cir = data.iloc[0][0]
 
         print("Obteniendo último ID KODAK...")
-        query = """
-            SELECT ID_KODAK_CIRCUNSCRIPCION FROM RCE_GED.SYS_KODAK_CIRCUNSCRIPCION ORDER BY ID_KODAK_CIRCUNSCRIPCION DESC
-            fetch first 1 rows only
-            """
-
+        query = """SELECT ID_KODAK_CIRCUNSCRIPCION FROM RCE_GED.SYS_KODAK_CIRCUNSCRIPCION 
+            ORDER BY ID_KODAK_CIRCUNSCRIPCION DESC
+            fetch first 1 rows only"""
         data = pd.read_sql(query, conn)
+        
         k_ini = data.iloc[0][0]
         k_ini += 1
         k_ini = str(k_ini)
@@ -116,7 +114,8 @@ def crear_scripts_sql(df):
 
 if __name__ == "__main__":
     
-    df = pd.read_excel('delegaciones.xlsx')
+    # df = pd.read_excel('delegaciones.xlsx')
+    df = pd.read_csv('delegaciones.csv')
     pdtabulate=lambda df:tabulate(df,headers='keys',tablefmt='psql')
     print(pdtabulate(df))
     crear_scripts_sql(df)

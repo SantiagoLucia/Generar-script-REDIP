@@ -5,14 +5,14 @@ SET SERVEROUTPUT ON
 SET DEFINE OFF
 
 DECLARE
-    v_registros_modificados NUMBER (30);
+    v_registros_insertados  NUMBER (30);
     v_numero_esperado       NUMBER (30);
     REG_ACT_EXCEPTION       EXCEPTION;
 
 BEGIN
 --!!!ESTE VALOR SE DEBE ACTUALIZAR ACORDE A LA CANTIDAD MAXIMA DE REGISTROS QUE SE ESPERAN INSERTAR!!!
 v_numero_esperado       := $numero_esperado; --Cantidad de Inserts en la base de datos
-v_registros_modificados := 0;
+v_registros_insertados := 0;
 DBMS_OUTPUT.put_line ('***COMIENZA SCRIPT***');
 DBMS_OUTPUT.put_line ('Se esperan insertar '||v_numero_esperado ||' registros');
 
@@ -47,7 +47,7 @@ VALUES
 );
 
 DBMS_OUTPUT.put_line ('Registros insertados: ' || SQL%ROWCOUNT);
-v_registros_modificados := v_registros_modificados + SQL%ROWCOUNT;
+v_registros_insertados := v_registros_insertados + SQL%ROWCOUNT;
 """)
 
 encabezado_kodak = Template("""
@@ -86,12 +86,12 @@ insert_kodak = Template("""
 final = Template("""
 --FIN INSERT
 
-IF (v_registros_modificados != v_numero_esperado) THEN
+IF (v_registros_insertados != v_numero_esperado) THEN
     RAISE REG_ACT_EXCEPTION;
 END IF;
 
-ROLLBACK; --!!!PARA EJECUTAR PASAR A COMMIT!!!
-DBMS_OUTPUT.put_line ('Se insertaron '||v_registros_modificados||' registros');
+COMMIT; --!!!PARA EJECUTAR PASAR A COMMIT!!!
+DBMS_OUTPUT.put_line ('Se insertaron '||v_registros_insertados||' registros');
 DBMS_OUTPUT.put_line ('***COMMIT REALIZADO***');
 
 EXCEPTION
@@ -99,7 +99,7 @@ WHEN REG_ACT_EXCEPTION THEN
     BEGIN
     ROLLBACK;
     DBMS_OUTPUT.put_line ('SE REALIZA ROLLBACK DE TRANSACCION: ');
-    DBMS_OUTPUT.put_line ('LA CANTIDAD DE REGISTROS INSERTADOS NO COINCIDE CON LA ESPERADA ' || v_registros_modificados);
+    DBMS_OUTPUT.put_line ('LA CANTIDAD DE REGISTROS INSERTADOS NO COINCIDE CON LA ESPERADA ' || v_registros_insertados);
 END;
 
 WHEN OTHERS THEN
