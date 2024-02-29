@@ -38,7 +38,8 @@ def crear_scripts_sql(df):
             fetch first 1 rows only"""
         )
         data = pd.read_sql(query, conn)
-        id_cir = data.iloc[0][0]
+        # id_cir = data.iloc[0][0]
+        id_cir = data.loc[0]["id_circunscripcion"]
 
         print("Obteniendo último ID KODAK...")
         query = sqlalchemy.text(
@@ -48,7 +49,7 @@ def crear_scripts_sql(df):
         )
         data = pd.read_sql(query, conn)
 
-        k_ini = data.iloc[0][0]
+        k_ini = data.loc[0]["id_kodak_circunscripcion"]
         k_ini += 1
         k_ini = str(k_ini)
         print("OK")
@@ -91,7 +92,7 @@ def crear_scripts_sql(df):
                     """
                 )
                 data = pd.read_sql(query, conn)
-                res = data.iloc[0][0]
+                res = data.loc[0]["id"]
                 loc = str(res)
 
             except:
