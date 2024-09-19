@@ -133,7 +133,6 @@ def crear_scripts_sql(df):
 
 if __name__ == "__main__":
     df = pd.read_excel("./data/delegaciones.xlsx")
-    # df = pd.read_csv('./data/delegaciones.csv')
     pdtabulate = lambda df: tabulate(df, headers="keys", tablefmt="psql")
     print(pdtabulate(df))
     crear_scripts_sql(df)
