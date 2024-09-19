@@ -115,7 +115,7 @@ def main():
             )
             escribir_archivo(archivo_delegaciones, contenido, "a")
 
-            if int(tipo_registro) in (3, 5, 6):
+            if tipo_registro in ("3", "5", "6"):
                 contenido = generar_seccion("insert_kodak", tipo_registro, codigo_renaper, id_delegacion)
                 escribir_archivo(archivo_kodak, contenido, "a")
 
