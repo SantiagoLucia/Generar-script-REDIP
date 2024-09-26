@@ -49,35 +49,8 @@ VALUES
 v_registros_insertados := v_registros_insertados + SQL%ROWCOUNT;
 """)
 
-encabezado_kodak = Template("""
-SET SERVEROUTPUT ON
-SET DEFINE OFF
-
-/*
-SE AGREGAN DELEGACIONES A KODAK CIRCUNSCRIPCION
-TABLA RCE_GED.SYS_KODAK_CIRCUNSCRIPCION
-*/
-
-DECLARE
-    v_registros_insertados  NUMBER (30);
-    v_numero_esperado       NUMBER (30);
-    v_id_kodak              NUMBER (30);
-    REG_ACT_EXCEPTION       EXCEPTION;
-
-BEGIN
-    --!!!ESTE VALOR SE DEBE ACTUALIZAR ACORDE A LA CANTIDAD MAXIMA DE REGISTROS QUE SE ESPERAN INSERTAR!!!
-    v_numero_esperado       := $numero_esperado; --Cantidad de Inserts en la base de datos
-    v_registros_insertados  := 0;
-    v_id_kodak              := $id_kodak;
-    DBMS_OUTPUT.put_line ('***COMIENZA SCRIPT***');
-    DBMS_OUTPUT.put_line ('Se esperan insertar '||v_numero_esperado ||' registros');
-
-    --BEGIN INSERT
-""")
-
 insert_kodak = Template("""
-    INSERT INTO RCE_GED.SYS_KODAK_CIRCUNSCRIPCION (ID_KODAK_CIRCUNSCRIPCION,FK_TIPO_REGISTRO,NOMBRE,FK_CIRCUNSCRIPCION) VALUES (v_id_kodak,$fk_tipo_registro,'$nombre',$fk_circunscripcion);
-    v_id_kodak := v_id_kodak + 1;
+    INSERT INTO RCE_GED.SYS_KODAK_CIRCUNSCRIPCION (ID_KODAK_CIRCUNSCRIPCION,FK_TIPO_REGISTRO,NOMBRE,FK_CIRCUNSCRIPCION) VALUES ($id_kodak_circunscripcion,$fk_tipo_registro,'$nombre',$fk_circunscripcion);
     v_registros_insertados := v_registros_insertados + SQL%ROWCOUNT;
 """)
 

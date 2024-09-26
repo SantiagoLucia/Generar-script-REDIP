@@ -10,8 +10,6 @@ def generar_seccion(seccion: str, *args) -> str:
         "encabezado": templates.encabezado,
         "final": templates.final,
         "insert": templates.insert,
-        "encabezado_kodak": templates.encabezado_kodak,
-        "final_kodak": templates.final,
         "insert_kodak": templates.insert_kodak,
     }
 
@@ -74,7 +72,7 @@ def procesar_delegaciones(df, conn, archivo_delegaciones, archivo_kodak, cantida
             fetch first 1 rows only"""
         )
         id_kodak = obtener_ultimo_id(conn, query)
-        contenido = generar_seccion("encabezado_kodak", cantidad_inserts["kodak"], id_kodak)
+        contenido = generar_seccion("encabezado", cantidad_inserts["kodak"])
         escribir_archivo(archivo_kodak, contenido, "w+")
 
     for _, row in df.iterrows():
@@ -106,13 +104,14 @@ def procesar_delegaciones(df, conn, archivo_delegaciones, archivo_kodak, cantida
         escribir_archivo(archivo_delegaciones, contenido, "a")
 
         if tipo_registro in ("3", "5", "6"):
-            contenido = generar_seccion("insert_kodak", tipo_registro, codigo_renaper, id_delegacion)
+            id_kodak += 1
+            contenido = generar_seccion("insert_kodak", id_kodak, tipo_registro, codigo_renaper, id_delegacion)
             escribir_archivo(archivo_kodak, contenido, "a")
 
     contenido = generar_seccion("final")
     escribir_archivo(archivo_delegaciones, contenido, "a")
     if escribir_kodak:
-        contenido = generar_seccion("final_kodak")
+        contenido = generar_seccion("final")
         escribir_archivo(archivo_kodak, contenido, "a")
 
 
